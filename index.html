@@ -250,13 +250,60 @@ long as there is a change on the foreground windows.<br>
           <br>To build our own HMM model, we first need to calculate thestart probability of all the applications appearing in the dataset. Then for all of the applications, computed the transition matrix, which is a matrix that indicates the probability each application will be opened based on the application provided. Finally, we integrate all the previous steps into a hidden markov model, and then we can test out the model with the entire dataset split into training and testing data. Below is the correlation matrix of all the applications with each other, and we can tell some of the applications does have a relatively high correlation with another, such as REDLauncher.exe with Cyberpunk2077.exe, Anaconda with python, etc.
         </p>
         <img class="u-expanded-width u-image u-image-contain u-image-2" src="images/corrmat.png" data-image-width="832" data-image-height="724">
-        <p class="u-text u-text-3"> Now we have the model with only one prediction for each previous applications. To increase the accuracy, also to provide a more reasonable output, we include variable n to represent the number of possible output we want, which is the applications that have the highest n probabilities in our transition matrix. With this model, we developed our maximum accuracy to 74.455% with 6 possible results.<br>
+        <p class="u-text u-text-3"> Now we have the model with only one prediction for each previous applications. To increase the accuracy, also to provide a more reasonable output, we include variable n to represent the number of possible output we want, which is the applications that have the highest n probabilities in our transition matrix. With this model, we developed our maximum accuracy to 73.53% with 8 possible results.<br>
         </p>
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-align-center u-container-style u-image u-layout-cell u-size-35 u-image-3" data-image-width="752" data-image-height="452">
+                <div class="u-container-layout u-container-layout-1"></div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-25 u-layout-cell-2">
+                <div class="u-container-layout u-valign-bottom u-container-layout-2">
+                  <div class="u-table u-table-responsive u-table-1">
+                    <table class="u-table-entity">
+                      <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                      </colgroup>
+                      <tbody class="u-table-body">
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Number of Predictions</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Accuracy</td>
+                        </tr>
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">n = 1</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">22.05%</td>
+                        </tr>
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-5">n = 2</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">33.82%</td>
+                        </tr>
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-7">n = 3</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">60.29%</td>
+                        </tr>
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-9">n = 6</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">69.85%</td>
+                        </tr>
+                        <tr style="height: 56px;">
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-11">n = 8</td>
+                          <td class="u-border-1 u-border-grey-dark-1 u-table-cell">73.53%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section class="u-clearfix u-section-6" id="sec-6be4">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h1 class="u-text u-text-default u-text-1"> LSTM Time Series Forecasting</h1>
+        <h1 class="u-text u-text-1"> LSTM Time Series Forecasting</h1>
         <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="images/lstm-2.svg" alt="" data-image-width="518" data-image-height="268">
         <p class="u-text u-text-default u-text-2"> Recurrent Neural Network (RNN) is a type of deep learning model that is commonly used for processing sequential data, such as natural language processing, and time series prediction.&nbsp;We chose LSTM networks to help us make predictions on the time duration of a foreground window, because LSTM can effectively capture short-term and long-term dependencies in sequential data.<br>
           <br>Before we implement the LSTM, we first need to do feature engineering and transform the data into a condition which is ready to use for the LSTM model. Firstly, we extracted the time and categorized it to hour, minute, day, month. Then, we encoded the application names and added it to the dataframe. Lastly, we added the time duration of each foreground window into the dataframe.<br>
